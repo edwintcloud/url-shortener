@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  mongo-db:
+    image: mongo:4.2.3
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+  redis-cache:
+    image: redis:5.0-alpine
+    restart: always
+    ports:
+      - 6379:6379
+  url-shortener:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - PORT=${PORT}
+      - REPO_TYPE=${REPO_TYPE}
+      - REDIS_URL=${REDIS_URL}
+      - MONGO_URL=${MONGO_URL}
+      - MONGO_DB=${MONGO_DB}
+      - MONGO_TIMEOUT=${MONGO_TIMEOUT}
+    depends_on:
+      - mongo-db
+      - redis-cache

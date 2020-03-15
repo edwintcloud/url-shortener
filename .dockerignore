@@ -1,0 +1,10 @@
+*
+
+!Dockerfile
+!*.go
+!go.mod
+!go.sum
+!api/
+!repositories/
+!serializers/
+!shortener
